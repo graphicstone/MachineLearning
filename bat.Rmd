@@ -1,0 +1,51 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+leadership = data.frame(
+    member = c(1,2,3,4,5),
+    date = c("24/10/08","28/10/08","10/01/08","10/12/08","01/05/09"),
+    country = c("US","US","UK","UK","UK"),
+    gender = c("M","F","F","M","F"),
+    age = c(32,45,25,39,99),
+    q1 = c(5,3,3,3,2),
+    q2 = c(4,5,5,3,2),
+    q3 = c(5,2,5,4,1),
+    q4 = c(5,5,5,NA,NA),
+    q5 = c(2,6,9,NA,8),
+    stringAsFactor = FALSE
+)
+leadership
+print(leadership)
+x = c(10,20,40,50,66,77)
+plot(x, type = "l")
+plot(x)
+y = c(10,20,33,50,79,29)
+plot(y,type = "l")
+plot(y,type = "l")
+plot(y,type = "o")
+plot(y,type = "h")
+plot(y,type = "s")
+plot(x,col='blue', type = "h")
+plot(x,col='blue' ,type = "l")
+lines(y, col="red")
+summary(x)
+boxplot(x,y)
+pie(x)
+pie(y)
+pie(x,y)
+labels = c("Gotham","Metropolis","Atlantis","CentralCity","Asgard","Apocalypse")
+piepercent = round(100*x/sum(x), 1)
+pie(x,labels = piepercent, main = "City Pie Chart", col=rainbow(length(x)))
+legend("topright", labels, cex = 0.8, fill = rainbow(length(x)))
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
