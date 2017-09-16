@@ -1,0 +1,51 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+iris
+dat <- iris
+dt = dat[1:25,]
+dim(dt)
+dt
+xdata <- iris
+ydata <- xdata[,3:4]
+xd <- head(ydata, 20)
+clust <- hclust(dist(xd))
+plot(clust)
+str(xdata)
+x1 <- c(1,2)
+x2 <- c(2.5,4.5)
+x3 <- c(2,2)
+x4 <- c(4,1.5)
+x5 <- c(4,2.5)
+df <- data.frame(x1,x2,x3,x4,x5)
+dm <- as.matrix(df)
+dm
+tt <- t(dm)
+tt
+dd <-dist(tt)
+dd
+csin <- hclust(dd,method = "single")    #Linkage between points
+csin1 <- hclust(dd,method = "complete")
+csin2 <- hclust(dd,method = "average")
+csin3 <- hclust(dd,method = "ward")
+mt <- mtcars
+d <- dist(as.matrix(mt))
+csin4 <- hclust(d, method = "complete")
+plot(csin)
+plot(csin1)
+plot(csin2)
+plot(csin3)
+plot(csin4)
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).

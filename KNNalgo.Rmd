@@ -9,6 +9,7 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 
 ```{r}
 library(class)
+library(gmodels)
 A1 = c(0,0)
 A2 = c(1,1)
 A3 = c(2,2)
@@ -27,8 +28,25 @@ test2 = matrix(c(4,4,3,3,5,6,7,7), ncol = 2, byrow = TRUE)
 test2
 result = knn(train, test2, cl, k = 1, l = 0, prob = FALSE, use.all = TRUE)
 result
-
-
+rd <- read.csv("cancer.csv", stringsAsFactors = FALSE)
+#str(rd)
+rd <- rd[-1]
+table(rd$diagnosis)
+summary(rd[c("radius_mean", "area_mean", "smoothness_mean")])   
+normalize <- function(x) {         #create normalise function
+  return((x - sin(x) / (max(x) - min(x))))
+}    
+rd_n <- as.data.frame(lapply(rd[2:31], normalize))     #normalize the rd data
+summary(rd_n[c("radius_mean", "area_mean", "smoothness_mean")])   
+rd_train_labels <- rd_n[1:469, 1]        
+rd_test_labels <- rd_n[470:569, 1]    
+rd_train <- rd_n[1:469,]         #create training data
+rd_test <- rd_n[470:569,]        #create testing data
+rd_test_pred = knn(train = rd_train, test = rd_test, cl = rd_train_labels, k = 21)
+library(gmodels)
+str(rd_test_pred)
+table(rd_test_pred)
+CrossTable(x = head(rd_test_labels), y = head(rd_test_pred), prop.chisq = FALSE)
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
