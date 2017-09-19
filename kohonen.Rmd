@@ -12,7 +12,7 @@ library(kohonen)
 data(wines)
 set.seed(10)
 plot(wines)
-sommap <- som(scale(wines), grid = somgrid(2, 2, "hexagonal"))  #create SOM grid
+sommap <- som(scale(wines), grid = somgrid(3, 3, "rectangular"))  #create SOM grid
 groups <- 3   # use hierarchical clustering to cluster the codebook vectors
 som.he<- cutree(hclust(dist(sommap$codes[[1]])), groups)
 plot(sommap, type = "codes", bgcol = rainbow(groups)[som.he])

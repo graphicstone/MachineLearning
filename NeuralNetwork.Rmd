@@ -1,0 +1,86 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(neuralnet)
+concrete <- read.csv("concrete.csv")
+summary(concrete)
+str(concrete)
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+concrete_norm <- as.data.frame(lapply(concrete, normalize))
+summary(concrete_norm$strength)
+concrete_train <- concrete_norm[1:773, ]
+concrete_test <- concrete_norm[774:1030, ]
+set.seed(111)
+concrete_modal <- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train)
+plot(concrete_modal)
+set.seed(111)
+concrete_modal <- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train, hidden = 2)
+plot(concrete_modal)
+modal_results <- compute(concrete_modal, concrete_test[1:8])
+predicted_strength <- modal_results$net.result
+cor(predicted_strength, concrete_test$strength)
+
+```
+
+```{r}
+library(neuralnet)
+data <- read.csv("GDPData.csv")
+summary(data)
+str(data)
+normalize <- function(x) {
+  return((x - 0) / (35 - 0))
+}
+gdp_norm <- as.data.frame(lapply(data, normalize))
+gdp_train <- gdp_norm[1:20, ]
+gdp_test <- gdp_norm[20:35, ]
+set.seed(111)
+gdp_modal <- neuralnet(GDP ~ Agriculture + Industry + Service, data = gdp_train)
+plot(gdp_modal)
+set.seed(111)
+gdp_modal <- neuralnet(GDP ~ Agriculture + Industry + Service, data = gdp_train, hidden = 2)
+plot(gdp_modal)
+
+```
+
+```{r}
+head(mtcars)
+mtcars$am <- as.factor(mtcars$am)
+levels(mtcars$am) <- c("Automatic", "Manual")
+head(mtcars)
+y <- (mtcars$mpg)
+x1 <- (mtcars$am)
+x2 <- (mtcars$wt)
+x3 <- (mtcars$hp)
+cars <- data.frame(y,x1,x2,x3)
+summary(cars)
+str(cars)
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+cars_norm <- as.data.frame(lapply(cars, normalize))
+summary(cars_norm$strength)
+cars_train <- cars_norm[1:773, ]
+cars_test <- cars_norm[774:1030, ]
+set.seed(111)
+cars_modal <- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train)
+plot(concrete_modal)
+set.seed(111)
+concrete_modal <- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train, hidden = 2)
+plot(concrete_modal)
+modal_results <- compute(concrete_modal, concrete_test[1:8])
+predicted_strength <- modal_results$net.result
+cor(predicted_strength, concrete_test$strength)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
