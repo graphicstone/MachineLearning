@@ -1,0 +1,79 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+x <- c(2, 56, 3,45, 56)
+city <- c("london", "Delhi", "Mumbai", "Florida", "Toronto")
+library(plotrix)
+pie(x, labels = city, main = "City Population", col = rainbow(5))
+pie3D(x, labels = city, main = "City Population", explode = 0.1, col = rainbow(5))
+barplot(x, names.arg  = city, xlab = 'city', ylab = 'population', main = "City Population", col = rainbow(5))
+hist(x,xlab = "City",col = "red", breaks = 5, border = "blue")
+#print(mtcars)
+#input <- mtcars(c("wt", "mpg"))
+plot(x = mtcars$wt, y = mtcars$mpg, 
+     xlab = "City",
+     ylab = "Population",
+     main = "Population")
+getmode <- function(v)
+{
+  uniqv <- unique(v)
+  uniqv[which.min(tabulate(match(v,uniqv)))]
+}
+v <- c(2,1,5,4,7,7,7,3,7,9,4,2,4)
+result <- getmode(v)
+print(result)
+```
+
+```{r}
+test <- read.csv("test.csv")
+train <- read.csv("train.csv")
+View(train)
+View(test)
+?nrow
+test_survived <- data.frame(Survived = rep("None", nrow(test)), test[,])
+View(test_survived)
+print(head(train$Survived))
+test_combined <-rbind(train, test_survived)
+View(test_combined)
+nrow(test_combined)
+ncol(test_combined)
+test_combined$Survived <- as.factor(test_combined$Survived)
+str(test_combined)
+test_combined$Pclass <- as.factor(test_combined$Pclass)
+table(test_combined$Survived)
+table(test_combined$Pclass)
+
+library(ggplot2)
+train$Pclass <- as.factor(train$Pclass)
+ggplot(train, aes(x=Pclass, fill = factor(Survived))) +
+       stat_count(width = 0.5) +
+         xlab("Pclass") +
+         ylab("Total Count") +
+         labs(fill = "Survived")
+head(as.character(train$Name))
+#length(unique(as.character(data_combined)))
+length(unique(as.character(test_combined$Name)))
+#first get duplicate names
+dup_name <- as.character(test_combined[which(duplicated(as.character(test_combined))), "Name"])
+print(dup_name)
+test_combined[which(test_combined$Name %in% dup_name),]
+
+library(stringr)
+misses <- test_combined[which(str_detect(test_combined$Name, "Miss.")),]
+misses[1:5,]
+
+#Check out males to see if pattern continues
+males <- test_combined[which(train$Sex=='male'),]
+males[1:5,]
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
